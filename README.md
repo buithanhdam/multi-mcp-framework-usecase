@@ -12,6 +12,7 @@ Before you begin, ensure you have the following installed:
 - Python **3.10** or higher  
 - Git  
 - A terminal or command prompt  
+- [uv](https://github.com/astral-sh/uv) (recommended Python package manager)
 
 ---
 
@@ -45,13 +46,35 @@ On **macOS/Linux**:
 source venv/bin/activate
 ```
 
-### 3. Install Dependencies
+### 3. Install `uv`
+
+If you don’t have **uv** installed, run:
+
+On **macOS/Linux**:
 
 ```bash
-pip install -r requirements.txt
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-### 4. Run MCP Inspect
+On **Windows (PowerShell)**:
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+Check installation:
+
+```bash
+uv --version
+```
+
+### 4. Install Dependencies
+
+```bash
+uv pip install -r requirements.txt
+```
+
+### 5. Run MCP Inspect
 
 To inspect the MCP setup, run:
 
@@ -65,7 +88,7 @@ uv run mcp dev server.py
 
 Then open your browser at: [http://localhost:6274](http://localhost:6274)
 
-### 5. Start the MCP Server
+### 6. Start the MCP Server
 
 **Note**: You must go to other mcp adapter frameworks folder and then go to server folder to run python file.
 example:
@@ -82,7 +105,7 @@ python server.py
 mcp server
 ```
 
-### 6. Run the Client
+### 7. Run the Client
 
 **Note**: You must go to other mcp adapter frameworks folder and then go to client folder to run python file.
 example:
@@ -99,7 +122,7 @@ python client_stdio.py
 python client_http.py
 ```
 
-### 7. Test the Setup
+### 8. Test the Setup
 
 * Ensure the **server is running** before executing a client script.
 * The client will call tools and display results in the terminal.
