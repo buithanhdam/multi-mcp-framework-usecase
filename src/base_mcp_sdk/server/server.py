@@ -4,7 +4,11 @@ from src.base_mcp_sdk.server.tool_models import WeatherData, LocationInfo, UserP
 from mcp.server.fastmcp.prompts import base
 from src.base_mcp_sdk.server.prompts import _greet_user, _write_story, _review_code, _debug_error
 # Create an MCP server
-mcp = FastMCP("Demo")
+mcp = FastMCP(
+    name = "Demo",
+    host= "127.0.0.1",
+    port = 8765,
+)
 
 # Add an addition tool
 @mcp.tool()
@@ -55,23 +59,23 @@ def get_greeting(name: str) -> str:
 
 
 # Add a prompt
-@mcp.prompt(name="Greet current user")
+@mcp.prompt()
 def greet_user(name: str) -> str:
     """Generate a greeting prompt"""
     return _greet_user(name)
 
-@mcp.prompt(name="Story writer")
+@mcp.prompt()
 def write_story(input: str) -> str:
     """Generate a story writing prompt"""
     return _write_story(input)
-@mcp.prompt(name="Code reviewer")
+@mcp.prompt()
 def review_code(code: str) -> str:
     """Generate a code review prompt"""
     return _review_code(code)
-@mcp.prompt(name="Debug an error")
+@mcp.prompt()
 def debug_error(error: str) -> list[base.Message]:
     """Generate a debugging prompt"""
     return _debug_error(error)
 
 if __name__ == "__main__":
-    mcp.run()
+    mcp.run(transport="sse")

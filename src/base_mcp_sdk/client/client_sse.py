@@ -9,7 +9,7 @@ import os
 from pydantic import AnyUrl
 
 from mcp import ClientSession, StdioServerParameters, types
-from mcp.client.stdio import stdio_client
+from mcp.client.sse import sse_client
 from mcp.shared.context import RequestContext
 
 # Create server parameters for stdio connection
@@ -37,7 +37,7 @@ async def handle_sampling_message(
 
 
 async def run():
-    async with stdio_client(server_params) as (read, write):
+    async with sse_client(url="http://localhost:8765/sse") as (read, write):
         async with ClientSession(read, write) as session:
             # Initialize the connection
             await session.initialize()
@@ -66,7 +66,7 @@ async def run():
                 print(f"Resource content: {content_block.text}")
 
             # Call a tool (add tool from fastmcp_quickstart)
-            result = await session.call_tool("get_location", arguments={"address":"Ho chi minh"})
+            result = await session.call_tool("list_cities", arguments={"address":"Ho chi minh"})
             result_unstructured = result.content[0]
             if isinstance(result_unstructured, types.TextContent):
                 print(f"Tool result: {result_unstructured.text}")
